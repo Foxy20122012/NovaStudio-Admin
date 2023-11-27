@@ -4,7 +4,8 @@ const productProps = [
       name: "name",
       type: "text",
       placeholder: "Nombre del producto",
-      readOnly: true, // El campo ID generalmente es de solo lectura
+      readOnly: false, // El campo ID generalmente es de solo lectura
+      required: true,
     },
     {
       label: "Precio del producto",

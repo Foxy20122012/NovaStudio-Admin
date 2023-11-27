@@ -1,49 +1,67 @@
 'use client'
-import { useState, useEffect } from "react";
-import DynamicForm from '../../components/DynamicForm'
-import Modal from '../../components/Modal'
-import SuccessModal from '../../components/SuccessModal'
-import productProps from '../../models/productProps'
+import { useRef, useState } from "react";
+import DynamicForm from '../../components/DynamicForm';
+import Modal from '../../components/Modal';
+import SuccessModal from '../../components/SuccessModal';
+import productProps from '../../models/productProps';
+import axios from "axios";
 
-const NewProducts= () => {
+const NewProducts = () => {
 
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [clientToDelete, setClientToDelete] = useState(null);
-    const [isDeleteSuccess, setIsDeleteSuccess] = useState(false);
-    const [isFormVisible, setIsFormVisible] = useState(false);
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [clientToDelete, setClientToDelete] = useState(null);
+  const [isDeleteSuccess, setIsDeleteSuccess] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  
+
+  const closeDeleteModal = () => {
+    setClientToDelete(null);
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleEditCliente = () => {
+    setSelectedProduct(null); // Assuming you want to open the form for a new entry
+    setIsFormVisible(true);
+  };
+
+  const handleDelete = () => {
+    openDeleteModal();
+  };
+
+  const handleNewClick = () => {
+    setSelectedProduct(null);
+    setIsFormVisible(true);
+  };
+
+
+  const [product, setProduct] = useState({
+    name: "",
+    price: 0,
+    description: "",
+  });
+
+  const handleChange = (e) => {
+    setProduct({
+      ...product,
+      [e.target.name]: e.target.value
+    })
+  };
+
+  const  handleSubmit = async (e) => {
+  
+    console.log(product);
+
+    const res = await axios.post('/api/products', product)
+    console.log(res)
     
-    const closeDeleteModal = () => {
-        setClientToDelete(null);
-        setIsDeleteModalOpen(false);
-      };
-      
-      const handleEditCliente = () => {
-        setSelectedCliente();
-        setIsFormVisible(true);
-      };
+  };
 
-      const handleDelete = () => {
-        openDeleteModal();
-      };
-
-      const handleNewClick = () => {
-        setSelectedCliente(null);
-        setIsFormVisible(true);
-      };
-      
-    
-    const [Product, setProduct] = useState({
-        name: "",
-        price: 0,
-        description: "",
-    });
-
-    const handleChange = (e) => {
-            console.log(e)
-        }
-    return (
-        <>
-        <div>
+  return (
+    <>
+      <div>
+        <button onClick={handleNewClick}>New</button>
         <Modal
           isOpen={isDeleteModalOpen}
           title="Confirmar Eliminación"
@@ -66,7 +84,7 @@ const NewProducts= () => {
           showUpdateButton={false}
           showConfirmButton={true} // Configura según tus necesidades
         />
-        
+
         <SuccessModal
           isOpen={isDeleteSuccess}
           onClose={() => setIsDeleteSuccess(false)}
@@ -75,26 +93,28 @@ const NewProducts= () => {
         />
         <Modal
           isOpen={isFormVisible}
-          title= "Nuevo Cliente"
+          title="Nuevo Cliente"
           onCancel={() => {
             setIsFormVisible(false);
-            setSelectedCliente(null);
+            setSelectedProduct(null);
           }}
           showCancelButton={true}
           showConfirmButton={false}
           showUpdateButton={false}
           onConfirm=""
-        ></Modal>
-
-            <DynamicForm 
-            columns={1} 
-            formProps={productProps}
+        >
+          <DynamicForm
+            columns={1}
+            onSubmit={handleSubmit}
+            formProps={productProps} // Make sure to replace this with your actual props
             showCreateButton={true}
             showUpdateButton={true}
-            />
-        </div>
-        </>
-    )
-}
+           
+          />
+        </Modal>
+      </div>
+    </>
+  );
+};
 
 export default NewProducts;
