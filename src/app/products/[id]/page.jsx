@@ -1,5 +1,6 @@
 import Buttons from "./Buttons";
 import { conn } from "../../../libs/mysql";
+import Navbar from "../../../components/Navbar"
 
 async function loadProduct(productId) {
   const [data] = await conn.query("SELECT * FROM product WHERE id = ?", [
@@ -12,17 +13,22 @@ async function ProductPage({ params }) {
   const product = await loadProduct(params.id);
 
   return (
-    <section className="flex justify-center items-center h-[calc(100vh-10rem)]">
-      <div className="flex w-4/6 h-2/6 justify-center">
-        <div className="p-6 bg-white w-1/3">
-          <h3 className="text-2xl font-bold mb-3">{product.name}</h3>
-          <h4 className="text-4xl font-bold">{product.price}$</h4>
-          <p className="text-slate-700">{product.description}</p>
+    <>
+    <Navbar/>
+    <section className="flex justify-center items-center h-screen bg-gradient-to-r from-teal-500 to-cyan-500">
+      <div className="flex w-11/12 max-w-4xl bg-white rounded-lg overflow-hidden shadow-xl">
+        <div className="w-2/3">
+          <img src={product.image} className="w-full h-full object-cover rounded-l-lg" alt="" />
+        </div>
+        <div className="w-1/3 p-8">
+          <h3 className="text-4xl font-extrabold mb-4 text-gray-800">{product.name}</h3>
+          <h4 className="text-5xl font-extrabold text-blue-500">${product.price.toFixed(2)}</h4>
+          <p className="text-gray-600 mb-6">{product.description}</p>
           <Buttons productId={product.id} />
         </div>
-        <img src={product.image} className="w-1/3" alt="" />
       </div>
     </section>
+    </>
   );
 }
 
