@@ -1,147 +1,245 @@
-'use client'
+"use client";
 import React, { useState } from "react";
-
-const ProductDropdown = () => {
-  // Puedes agregar las opciones específicas de productos aquí
-  const productOptions = [
-    "Producto 1",
-    "Producto 2",
-    "Producto 3",
-  ];
-
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-      {productOptions.map((option, index) => (
-        <a
-          key={index}
-          href={`#${option.toLowerCase().replace(" ", "-")}`}
-          className="text-gray-700 hover:text-blue-700"
-        >
-          {option}
-        </a>
-      ))}
-    </div>
-  );
-};
+import {
+  ChevronDownIcon,
+  UserCircleIcon,
+  user,
+} from "@heroicons/react/24/solid";
+import Link from "next/link";
 
 const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const title = "Asesores";
+  const [productosMenuVisible, setProductosMenuVisible] = useState(false);
+  const [nosotrosMenuVisible, setNosotrosMenuVisible] = useState(false);
+
+  const [mobileMenuVisible, setMobileMenuVisible] = useState(false); // Agregamos el estado para el menú móvil
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setMobileMenuVisible(!mobileMenuVisible); // Cambiamos la visibilidad del menú móvil al hacer clic en el botón
+  };
+
+  const toggleProductosMenu = () => {
+    setProductosMenuVisible(!productosMenuVisible);
+  };
+
+  const toggleNosotrosMenu = () => {
+    setNosotrosMenuVisible(!nosotrosMenuVisible);
+  };
+
+  const Marca = () => {
+    return (
+      <a
+        href=""
+        className="flex items-center md:flex md:justify-start md:mx-auto ml-auto "
+      >
+        <img src="/nova.jpeg" className="h-12" alt="Nova Studio" />
+      </a>
+    );
+  };
+
+  const InicioButton = () => {
+    const inicioLabel = "Home";
+
+    return (
+      <a
+        href="/home"
+        className="text-sky-700 bg-gray-100 hover:bg-sky-300 focus:ring-4 focus:ring-sky-100 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800"
+      >
+        {inicioLabel}
+      </a>
+    );
+  };
+
+  const ProductosButton = () => {
+    const productosLabel = "Productos";
+
+    return (
+      <div className="relative inline-block text-left">
+        <div>
+          <button
+            onClick={toggleProductosMenu}
+            className="flex items-center text-sky-700 bg-gray-100 hover:bg-sky-300 focus:ring-4 focus:ring-sky-100 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800"
+          >
+            {productosLabel} <ChevronDownIcon className="w-4 h-4 " />
+          </button>
+        </div>
+        {productosMenuVisible && (
+          <div className="origin-top-right absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg">
+            <div className="py-2">
+              <a
+                href="/admin-finanzas"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Administración y Finanzas
+              </a>
+              <a
+                href="/servicios-Ti"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Servicios de TI
+              </a>
+              <a
+                href="/process"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Procesos y Recaudación
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const Clientes = () => {
+    const clientesLabel = "Clientes";
+
+    return (
+      <a
+        href="/affiliates"
+        className="text-sky-700 bg-gray-100 hover:bg-sky-300 focus:ring-4 focus:ring-sky-100 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800"
+      >
+        {clientesLabel}
+      </a>
+    );
+  };
+
+  const Nosotros = () => {
+    const nosotrosLabel = "Nosotros";
+
+    return (
+      <div className="relative inline-block text-left">
+        <div>
+          <button
+            onClick={toggleNosotrosMenu}
+            className="flex items-center text-sky-700 bg-gray-100 hover:bg-sky-300 focus:ring-4 focus:ring-sky-100 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800"
+          >
+            {nosotrosLabel} <ChevronDownIcon className="w-4 h-4 " />
+          </button>
+        </div>
+        {nosotrosMenuVisible && (
+          <div className="origin-top-right absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg">
+            <div className="py-2">
+              <a
+                href="/Us"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Nosotros
+              </a>
+              <a
+                href="/consulting"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Prestaciones de Servicios
+              </a>
+              <a
+                href="/news"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Noticias Relevantes
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const Contactos = () => {
+    return (
+      <>
+        <a
+          href="mailto:guatemala@via-asesores.com"
+          className="text-gray-400 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800 invisible md:visible"
+        >
+          novaStudios@gmail.com
+        </a>
+        <a
+          href="telto:+502 22971267"
+          className="text-gray-400 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  invisible md:visible"
+        >
+          +502 4835 6624
+        </a>
+        <Link href="/login">
+          <button>
+            <UserCircleIcon className="h-10 w-10 text-white invisible md:visible" />
+          </button>
+        </Link>
+      </>
+    );
+  };
+
+  // const AccesosButton = () => {
+  //   const accesosLabel = "Accesos";
+
+  //   return (
+  //     <a
+  //       href="/accesos"
+  //       className="text-sky-700 bg-gray-100 hover:bg-sky-300 focus:ring-4 focus:ring-sky-100 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800"
+  //     >
+  //       {accesosLabel}
+  //     </a>
+  //   );
+  // };
+
+  const ContactameButton = () => {
+    const contactameLabel = "Contactenos";
+
+    return (
+      <a
+        href="/contactame"
+        className="invisible md:visible text-sky-700 bg-gray-100 hover:bg-sky-300 focus:ring-4 focus:ring-sky-100 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800"
+      >
+        {contactameLabel}
+      </a>
+    );
   };
 
   return (
-    <section className="fixed w-full">
-      <nav className="bg-white border-gray-200 dark:border-gray-600 dark:bg-gray-900">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4 md:px-6 py-2.5">
-          <a href="index.html" className="flex items-center">
-            <img
-              src="assets/img/orbis/cropped-Logo-VIA-Asesores-1-90x60.png"
-              className="mr-3 h-12 sm:h-9"
-              alt="Logo"
-            />
-          </a>
+    <nav className="bg-sky-900 border-sky-200 rounded-lg m-1 dark:bg-gray-900 shadow-md">
+      <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
+        <div className="flex justify-center">
           <button
-            id="botonburger"
+            className=" md:hidden ml-auto flex justify-end"
             onClick={toggleMobileMenu}
-            className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-expanded={isMobileMenuOpen}
           >
-            <span className="sr-only">Open main menu</span>
             <svg
-              className="w-6 h-6"
-              aria-hidden="true"
-              fill="currentColor"
-              viewBox="0 0 20 20"
+              className="w-6 h-6 text-white"
               xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
               <path
-                fillRule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clipRule="evenodd"
-              ></path>
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           </button>
+        </div>
+        <Marca />
+        <div className="flex mt-4">
           <div
-            id="mega-menu-full"
             className={`${
-              isMobileMenuOpen ? "block" : "hidden"
-            } md:block justify-between items-center w-full md:w-auto md:order-1`}
+              mobileMenuVisible ? "block" : "hidden"
+            } md:block md:flex md:items-center md:w-auto my-3`}
           >
-            <ul className="flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-              <li>
-                <a
-                  href="index.html"
-                  className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 md:text-gray-600"
-                  aria-current="page"
-                >
-                  Inicio
-                </a>
-              </li>
-              <li>
-                <div className="relative">
-              <button
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 mmd:text-gray-600"
-                  >
-                  Productos
-                  <svg
-                    className="ml-1 w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg>
-                </button>
-                {isMobileMenuOpen && (
-                    <ProductDropdown />
-                  )}
-                  </div>
-              </li>
-              {/* Otras opciones del menú... */}
-
-              <li>
-                <a
-                  href="tel:+50222129760"
-                  className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 md:text-gray-600"
-                >
-                  <i className="fa-solid fa-phone"></i>+502 2212 9760
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:guatemala@via-asesores.com"
-                  className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700 md:text-gray-600"
-                >
-                  <i className="fa-solid fa-envelope"></i>{" "}
-                  guatemala@via-asesores.com
-                </a>
-              </li>
-              <li>
-                <a
-                  href="contactenos.html"
-                  className="block md:p-2 rounded md:p-0 text-gray-600 md:text-white md:bg-blue-500 btnconta"
-                >
-                  Contactenos
-                </a>
-              </li>
-            </ul>
+            <InicioButton />
+            <ProductosButton />
+            <Clientes />
+            <Nosotros />
+            {/* <AccesosButton/> */}
+            <ContactameButton />
           </div>
         </div>
-        <div
-          id="mega-menu-full-dropdown"
-          className="mt-1 bg-gray-50 border-gray-200 shadow-sm md:bg-white border-y dark:bg-gray-800 dark:border-gray-600 hidden"
-        >
-          {/* Opciones del menú desplegable... */}
+
+        <div className="md:flex md:items-center ">
+          <Contactos />
         </div>
-      </nav>
-    </section>
+      </div>
+    </nav>
   );
 };
 
