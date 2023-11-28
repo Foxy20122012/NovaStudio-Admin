@@ -1,11 +1,25 @@
-const ProductsPage = () => {
+import ProductCard from '../../components/ProductCard';
+import { conn } from '../../libs/mysql'
+import axios from 'axios';
+
+async function loadProducts(){
+  const { data }  = await axios.get('http://localhost:3000/api/products');
+  return data;
+}
+
+ async function ProductsPage  ()  {
+  const products = await loadProducts();
+  
   return (
     <>
-      <div>
-        <h1 className="text-center font-bold text-2xl text-cyan-600 shadow-sm">This sections products</h1>
+      <div className='grid gap-4 grid-cols-4'>
+        {products.map(product => (
+          <ProductCard product={product} key={product.id}/>
+        ))}
       </div>
     </>
   );
 };
 
 export default ProductsPage;
+

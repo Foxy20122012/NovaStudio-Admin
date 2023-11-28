@@ -3,12 +3,8 @@ import { useEffect, useState } from "react";
 import DynamicForm from '../../components/DynamicForm';
 import Modal from '../../components/Modal';
 import SuccessModal from '../../components/SuccessModal';
-import DataTable from '../../components/DataTable'
 import productProps from '../../models/productProps';
-import { productColumns, transformProductsToRows } from '../../models/productModel';
 import axios from "axios";
-
-
 
 const NewProducts = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -17,31 +13,11 @@ const NewProducts = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [products, setProducts] = useState({
+  const [product, setProduct] = useState({
     name: "",
     price: 0,
     description: "",
   });
-
-
-  useEffect(() => {
-    // Realizar la solicitud GET al backend para obtener la lista de productos
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('/api/products');
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Error al obtener los productos:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const columns = Object.keys(productColumns).map(
-    (key) => ({ key, label: productColumns[key] })
-  );
-
 
   const closeDeleteModal = () => {
     setClientToDelete(null);
@@ -64,7 +40,7 @@ const NewProducts = () => {
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post('/api/products', products);
+      const res = await axios.post('/api/products', product);
       console.log(res);
       setIsSubmitSuccess(true);
     } catch (error) {
@@ -75,7 +51,7 @@ const NewProducts = () => {
   const handleSuccessModalClose = () => {
     setIsFormVisible(false);
     setIsSubmitSuccess(false);
-    setProducts({
+    setProduct({
       name: "",
       price: 0,
       description: "",
@@ -86,15 +62,6 @@ const NewProducts = () => {
     <>
       <div>
         <button onClick={handleNewClick}>New</button>
-        <DataTable
-          data={transformProductsToRows(products)}
-          title="Lista de Productos"
-          columns={columns}
-  
-          onEdit={handleEditCliente}
-          onDelete={handleDelete}
-          onNew={handleNewClick}
-        />
         <Modal
           isOpen={isDeleteModalOpen}
           title="Confirmar Eliminación"
@@ -155,7 +122,3 @@ const NewProducts = () => {
 };
 
 export default NewProducts;
-
-
-
-

@@ -1,28 +1,36 @@
 const productProps = [
-    {
-      label: "Nombre del producto",
-      name: "name",
-      type: "text",
-      placeholder: "Nombre del producto",
-      readOnly: false, // El campo ID generalmente es de solo lectura
-      required: true,
-    },
-    {
-      label: "Precio del producto",
-      name: "precio",
-      type: "price",
-      required: true,
-      maxLength: 8, // Agrega una longitud máxima
-      minLength: 1, // Agrega una longitud mínima
-    },
-    {
-        label: "Descripcion del producto",
-        name: "description",
-        type: "text",
-        required: true,
-        maxLength: 50, // Agrega una longitud máxima
-        minLength: 3, // Agrega una longitud mínima
-      },
-  ];
-  
-  export default productProps;
+  {
+    label: "Nombre del producto",
+    name: "name",
+    type: "text",
+    placeholder: "Nombre del producto",
+    readOnly: false,
+    required: true,
+  },
+  {
+    label: "Precio del producto",
+    name: "price",
+    type: "number",
+    required: false,
+    maxLength: 8,
+    minLength: 1,
+  },
+  {
+    label: "Descripción del producto",
+    name: "description",
+    type: "text",
+    required: false,
+    maxLength: 200, // Actualizado para reflejar la longitud máxima de la base de datos
+    minLength: 3,
+  },
+  {
+    label: "Imagen del producto",
+    name: "image",
+    type: "text", // Cambiado a "text" ya que parece ser una URL de imagen
+    placeholder: "URL de la imagen",
+    required: false, // Puede ser opcional según tus necesidades
+    maxLength: 200, // Actualizado para reflejar la longitud máxima de la base de datos
+  },
+];
+
+export default productProps;
