@@ -1,6 +1,6 @@
 import Buttons from "./Buttons";
 import { conn } from "../../../libs/mysql";
-import Navbar from "../../../components/Navbar"
+import Navbar from "../../../components/Navbar1"
 
 async function loadProduct(productId) {
   const [data] = await conn.query("SELECT * FROM product WHERE id = ?", [

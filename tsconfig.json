@@ -27,7 +27,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/components/NavItems.jsx", "src/components/NavItem.jsx", "src/config/index.js", "src/components/MobileNav.jsx", "src/middleware.js"  ],
   "exclude": [
     "node_modules"
   ]

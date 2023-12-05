@@ -13,7 +13,7 @@ async function loadProducts(){
   
   return (
     <div>
-    <Navbar />
+    <Navbar/>
     <section className='container mx-auto mt-16 px-8'> {/* mt-16 proporciona espacio para la barra de navegación */}
       <div className='grid gap-4 grid-cols-4'>
         {products.map(product => (
